@@ -15,9 +15,10 @@
             <div class="logo">MySite.</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <!-- Dark Mode Toggle Button -->
+                <li><button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode">🌙</button></li>
             </ul>
         </nav>
     </header>
@@ -27,25 +28,40 @@
         <!-- Hero / Intro Section -->
         <section id="home" class="hero container">
             <div class="hero-content">
-                <h1>Hello, I'm <span class="highlight">Jacob TerMaat</span></h1>
-                <p>Welcome to my personal website. I'm a Computer Engineer building things on the web.</p>
+                <h1>Hello, I'm <span class="highlight">[Your Name]</span></h1>
+                <p>Welcome to my personal website. I'm a[Your Profession/Interest] building things on the web.</p>
                 <a href="#projects" class="btn">View My Work</a>
             </div>
         </section>
 
-        <!-- Projects / Features Section -->
+        <!-- Projects Section -->
         <section id="projects" class="projects container">
             <h2>My Projects</h2>
             <div class="grid">
-                <!-- Project Card 1 -->
                 <div class="card">
                     <h3>Project One</h3>
                     <p>A brief description of this project and what technologies were used.</p>
                 </div>
-                <!-- Project Card 2 -->
                 <div class="card">
                     <h3>Project Two</h3>
                     <p>A placeholder for another amazing feature or project you will build.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact container">
+            <h2>Get In Touch</h2>
+            <div class="card contact-card">
+                <p>I'm currently open to new opportunities and projects. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+                
+                <div class="contact-links">
+                    <!-- Opens default mail client -->
+                    <a href="mailto:your.email@example.com" class="btn">Email Me</a>
+                    
+                    <!-- Professional Links -->
+                    <a href="https://github.com/[Your-Username]" target="_blank" rel="noopener noreferrer" class="btn btn-outline">GitHub</a>
+                    <a href="https://linkedin.com/in/[Your-Username]" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn</a>
                 </div>
             </div>
         </section>
@@ -54,7 +70,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; <span id="current-year"></span> Jacob TerMaat. All rights reserved.</p>
+            <p>&copy; <span id="current-year"></span> [Your Name]. All rights reserved.</p>
         </div>
     </footer>
 
