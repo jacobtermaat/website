@@ -1,6 +1,14 @@
 /* --- 1. CSS VARIABLES --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
+@font-face {
+    font-family: 'Bauhaus93Web';
+    src: url('../assets/fonts/bauhaus93.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --primary-color: #2563eb;       
     --primary-hover: #1d4ed8;
@@ -315,7 +323,7 @@ header {
 }
 
 .project-page-header h1 {
-    font-family: "Bauhaus 93", "Century Gothic", "Trebuchet MS", sans-serif;
+    font-family: "Bauhaus93Web", "Bauhaus 93", "Century Gothic", "Trebuchet MS", sans-serif;
     font-size: clamp(3.4rem, 9vw, 6.2rem);
     margin-bottom: 0;
     line-height: 1;
