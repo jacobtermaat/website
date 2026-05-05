@@ -59,10 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("typed")) {
         new Typed("#typed", {
             strings: [
-                "Computer Engineer", 
-                "Hardware Enthusiast", 
+                "Computer Engineer",  
                 "Software Developer", 
-                "Problem Solver"
+                "Volleyball Enthusiast"
             ],
             typeSpeed: 60,
             backSpeed: 40,
