@@ -54,7 +54,8 @@
                         data-position="1m 1m 1m"
                         data-normal="0m 1m 0m"
                         aria-label="Sample hotspot">
-                        +
+                        <span class="hotspot-symbol">+</span>
+                        <span class="hotspot-text">Corner</span>
                     </button>
                     <button
                         id="pick-marker"
@@ -84,6 +85,10 @@
                         <button id="copy-normal" class="btn btn-outline" type="button">Copy Normal</button>
                     </div>
                 </div>
+                <div class="picker-panel hotspot-info-panel" id="hotspot-info-panel">
+                    <p><strong id="hotspot-info-title">Corner</strong></p>
+                    <p id="hotspot-info-body">Placeholder information for the selected model point.</p>
+                </div>
             </div>
 
             <div class="hero-buttons hidden" style="margin-top: 24px;">
@@ -112,6 +117,8 @@
             const pickedNormal = document.getElementById("picked-normal");
             const copyPositionButton = document.getElementById("copy-position");
             const copyNormalButton = document.getElementById("copy-normal");
+            const hotspotInfoTitle = document.getElementById("hotspot-info-title");
+            const hotspotInfoBody = document.getElementById("hotspot-info-body");
             const defaultView = {
                 orbit: "45deg 75deg 100%",
                 target: "0m 0m 0m",
@@ -119,7 +126,7 @@
             };
             let pickModeEnabled = false;
 
-            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton || !sampleHotspot) return;
+            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton || !sampleHotspot || !hotspotInfoTitle || !hotspotInfoBody) return;
 
             const formatVec = (vec) => {
                 return `${vec.x.toFixed(4)}m ${vec.y.toFixed(4)}m ${vec.z.toFixed(4)}m`;
@@ -178,7 +185,8 @@
             });
 
             sampleHotspot.addEventListener("click", () => {
-                window.alert("Placeholder info: this is a sample hotspot at 1m, 1m, 1m.");
+                hotspotInfoTitle.textContent = "Corner";
+                hotspotInfoBody.textContent = "Placeholder information: this marker is pinned at 1m, 1m, 1m. Replace this text with your real project notes.";
             });
         });
     </script>
