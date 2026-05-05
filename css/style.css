@@ -393,17 +393,16 @@ header {
 }
 
 .model-card {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    width: min(1700px, calc(100% - 40px));
+    margin: 0 auto;
 }
 
 .tric-model-viewer {
     display: block;
-    width: 100vw;
+    width: 100%;
     height: min(82vh, 900px);
     min-height: 360px;
-    border-radius: 0;
+    border-radius: 12px;
     background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(139, 92, 246, 0.08));
 }
 
@@ -575,6 +574,9 @@ footer {
     .contributors-wrap {
         grid-template-columns: 1fr;
         width: 100%;
+    }
+    .model-card {
+        width: calc(100% - 24px);
     }
 
     /* Make buttons stack properly on super small screens */
