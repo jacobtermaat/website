@@ -258,6 +258,7 @@ header {
 
 .card h3 { font-size: 1.4rem; margin-bottom: 10px; }
 .card p { color: var(--text-muted); margin-bottom: 20px; }
+.projects .card .btn { margin-top: 18px; }
 
 .tags { display: flex; gap: 10px; flex-wrap: wrap; }
 .tag {
@@ -300,7 +301,47 @@ header {
     flex-wrap: wrap;
 }
 
-/* --- 8. FOOTER --- */
+/* --- 8. TRIC PAGE --- */
+.project-page {
+    padding: 60px 20px 100px 20px;
+}
+
+.project-page-header {
+    margin-bottom: 28px;
+}
+
+.project-page-header h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    margin-bottom: 12px;
+}
+
+.project-page-header p {
+    color: var(--text-muted);
+    max-width: 720px;
+}
+
+.model-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.tric-model-viewer {
+    width: 100%;
+    height: min(70vh, 620px);
+    min-height: 360px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(139, 92, 246, 0.08));
+}
+
+.model-help {
+    margin-top: 14px;
+    color: var(--text-muted);
+}
+
+/* --- 9. FOOTER --- */
 footer {
     text-align: center;
     padding: 40px 20px;
@@ -310,7 +351,7 @@ footer {
 }
 
 
-/* --- 9. MOBILE RESPONSIVENESS (Media Queries) --- */
+/* --- 10. MOBILE RESPONSIVENESS (Media Queries) --- */
 @media (max-width: 768px) {
     /* Show Hamburger Icon */
     .menu-toggle { display: flex; }

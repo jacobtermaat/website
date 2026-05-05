@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRIC | Jacob TerMaat</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar container">
+            <div class="logo">Jacob TerMaat.</div>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode">🌙</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-page container">
+            <div class="project-page-header hidden">
+                <h1>TRIC</h1>
+                <p>
+                    This page is the extended view for TRIC. Replace the placeholder model file in
+                    <code>assets/tric-model.glb</code> with your own model and this viewer will render it.
+                </p>
+            </div>
+
+            <div class="model-card hidden">
+                <model-viewer
+                    class="tric-model-viewer"
+                    src="assets/tric-model.glb"
+                    alt="3D model preview for TRIC"
+                    camera-controls
+                    touch-action="pan-y"
+                    auto-rotate
+                    shadow-intensity="1"
+                    exposure="1"
+                    ar>
+                </model-viewer>
+                <p class="model-help">
+                    Drag to rotate, scroll/pinch to zoom, and right-click drag (or two-finger drag) to pan.
+                </p>
+            </div>
+
+            <div class="hero-buttons hidden" style="margin-top: 24px;">
+                <a href="index.html#projects" class="btn btn-outline">Back to Projects</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Jacob TerMaat. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
