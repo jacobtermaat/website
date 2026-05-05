@@ -393,7 +393,8 @@ header {
 }
 
 .model-card {
-    width: min(1700px, calc(100% - 40px));
+    /* Wider left/right gutters for easier page scrolling */
+    width: min(1700px, calc(100% - 240px));
     margin: 0 auto;
 }
 
@@ -495,10 +496,10 @@ header {
     border: 1px solid var(--card-border);
     border-radius: 12px;
     background: var(--card-bg);
-    padding: 14px 16px;
+    padding: 10px 12px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-    min-width: 220px;
-    max-width: 320px;
+    min-width: 180px;
+    max-width: 260px;
 }
 
 .hotspot-popup-header {
