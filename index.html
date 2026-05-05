@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jacob TerMaat | Computer Engineer</title>
-    <!-- Link to our stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -26,7 +25,7 @@
     <!-- Main Content Area -->
     <main>
         <!-- Hero / Intro Section -->
-        <section id="home" class="hero container">
+        <section id="home" class="hero container hidden">
             <div class="hero-content">
                 <h1>Hello, I'm <span class="highlight">Jacob TerMaat</span></h1>
                 <p>Welcome to my personal website. I'm a Computer Engineer passionate about building efficient systems, solving complex problems, and creating things on the web.</p>
@@ -36,30 +35,45 @@
 
         <!-- Projects Section -->
         <section id="projects" class="projects container">
-            <h2>My Projects</h2>
+            <h2 class="hidden">Featured Work</h2>
             <div class="grid">
-                <div class="card">
-                    <h3>Hardware / Software Integration</h3>
-                    <p>A brief description of a project you've worked on, detailing the microcontrollers, languages (like C/C++ or Python), and architecture you used.</p>
+                <!-- Added "hidden" class for scroll reveal -->
+                <div class="card hidden">
+                    <h3>Embedded System Integrator</h3>
+                    <p>Designed a real-time data collection system using ARM microcontrollers. Integrated I2C/SPI sensors and wrote a Python dashboard for data visualization.</p>
+                    <div class="tags">
+                        <span class="tag">C / C++</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Hardware</span>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Project Two</h3>
-                    <p>A placeholder for another amazing feature, circuit design, or software project you will build.</p>
+                <div class="card hidden">
+                    <h3>FPGA Image Processor</h3>
+                    <p>Developed an image processing pipeline on an FPGA using Verilog, optimizing for high throughput and low latency pixel sorting.</p>
+                    <div class="tags">
+                        <span class="tag">Verilog</span>
+                        <span class="tag">FPGA</span>
+                    </div>
+                </div>
+                <div class="card hidden">
+                    <h3>Full-Stack Application</h3>
+                    <p>A web application built to monitor network traffic locally, utilizing a REST API backend and a responsive front-end design.</p>
+                    <div class="tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Node.js</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
         <section id="contact" class="contact container">
-            <h2>Get In Touch</h2>
-            <div class="card contact-card">
+            <h2 class="hidden">Get In Touch</h2>
+            <div class="card contact-card hidden">
                 <p>I'm currently open to new opportunities and projects. Whether you have a question or just want to connect with a fellow engineer, I'll try my best to get back to you!</p>
                 
                 <div class="contact-links">
-                    <!-- Opens default mail client -->
-                    <a href="mailto:your.email@example.com" class="btn">Email Me</a>
-                    
-                    <!-- Professional Links -->
+                    <a href="mailto:your.email@example.com" class="btn">Say Hello</a>
                     <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" rel="noopener noreferrer" class="btn btn-outline">GitHub</a>
                     <a href="https://linkedin.com/in/YOUR_LINKEDIN_USERNAME" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn</a>
                 </div>
@@ -74,7 +88,6 @@
         </div>
     </footer>
 
-    <!-- Link to our JavaScript. If your script.js is NOT in a folder called 'js', change this to src="script.js" -->
     <script src="js/script.js"></script>
 </body>
 </html>
