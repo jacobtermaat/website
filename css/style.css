@@ -319,6 +319,64 @@ header {
     margin-bottom: 12px;
 }
 
+.tric-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 28px;
+}
+
+.contributors-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 16px;
+    width: min(760px, 100%);
+}
+
+.contributor-group {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.contributor-group h3 {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.contributor-links {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.contributor-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
+.contributor-link:hover {
+    color: var(--primary-color);
+}
+
+.linkedin-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    background: #0a66c2;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
 .project-page-header p {
     color: var(--text-muted);
     max-width: 720px;
@@ -342,6 +400,29 @@ header {
 .model-controls {
     width: min(1600px, calc(100% - 40px));
     margin: 16px auto 0 auto;
+}
+
+.tric-details {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.tric-detail-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.tric-detail-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.tric-detail-card p {
+    color: var(--text-muted);
 }
 
 .model-help {
@@ -478,6 +559,13 @@ footer {
     .about { padding: 30px 20px 60px 20px; }
     .projects, .contact { padding: 60px 20px; }
     .contact-card { padding: 40px 15px; }
+    .tric-header-row {
+        flex-direction: column;
+    }
+    .contributors-wrap {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
 
     /* Make buttons stack properly on super small screens */
     .btn, .btn-outline { width: 100%; margin-bottom: 10px; }

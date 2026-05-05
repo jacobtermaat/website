@@ -30,7 +30,37 @@
     <main>
         <section class="project-page">
             <div class="project-page-header hidden">
-                <h1>TRIC</h1>
+                <div class="tric-header-row">
+                    <h1>TRIC</h1>
+                    <div class="contributors-wrap">
+                        <div class="contributor-group">
+                            <h3>Mechanical Engineers</h3>
+                            <div class="contributor-links">
+                                <a href="https://www.linkedin.com/in/mechanical-engineer-1" target="_blank" rel="noopener noreferrer" class="contributor-link" aria-label="Mechanical Engineer 1 LinkedIn">
+                                    Mechanical Engineer 1
+                                    <span class="linkedin-badge" aria-hidden="true">in</span>
+                                </a>
+                                <a href="https://www.linkedin.com/in/mechanical-engineer-2" target="_blank" rel="noopener noreferrer" class="contributor-link" aria-label="Mechanical Engineer 2 LinkedIn">
+                                    Mechanical Engineer 2
+                                    <span class="linkedin-badge" aria-hidden="true">in</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="contributor-group">
+                            <h3>Computer Engineers</h3>
+                            <div class="contributor-links">
+                                <a href="https://www.linkedin.com/in/computer-engineer-1" target="_blank" rel="noopener noreferrer" class="contributor-link" aria-label="Computer Engineer 1 LinkedIn">
+                                    Computer Engineer 1
+                                    <span class="linkedin-badge" aria-hidden="true">in</span>
+                                </a>
+                                <a href="https://www.linkedin.com/in/computer-engineer-2" target="_blank" rel="noopener noreferrer" class="contributor-link" aria-label="Computer Engineer 2 LinkedIn">
+                                    Computer Engineer 2
+                                    <span class="linkedin-badge" aria-hidden="true">in</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="model-card hidden">
@@ -42,6 +72,8 @@
                     camera-controls
                     disable-pan
                     camera-orbit="45deg 75deg 100%"
+                    min-camera-orbit="auto auto 50%"
+                    max-camera-orbit="auto auto 220%"
                     camera-target="0m 0m 0m"
                     field-of-view="30deg"
                     shadow-intensity="1"
@@ -100,6 +132,21 @@
                     </div>
                 </div>
             </div>
+
+            <section class="tric-details container hidden">
+                <div class="tric-detail-card">
+                    <h2>Awards</h2>
+                    <p>Placeholder: list competition placements, scholarship recognition, conference showcases, or internal project awards here.</p>
+                </div>
+                <div class="tric-detail-card">
+                    <h2>Mechanical</h2>
+                    <p>Placeholder: describe frame design, materials, CAD workflow, load constraints, fabrication process, and testing notes.</p>
+                </div>
+                <div class="tric-detail-card">
+                    <h2>Electrical/Software</h2>
+                    <p>Placeholder: describe control architecture, power system, sensor stack, firmware/software pipeline, and validation approach.</p>
+                </div>
+            </section>
 
             <div class="hero-buttons hidden" style="margin-top: 24px;">
                 <a href="index.html#projects" class="btn btn-outline">Back to Projects</a>
