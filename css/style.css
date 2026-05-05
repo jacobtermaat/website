@@ -500,6 +500,9 @@ header {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
     min-width: 180px;
     max-width: 260px;
+    font-size: 0.85rem;
+    line-height: 1.35;
+    transform-origin: top left;
 }
 
 .hotspot-popup-header {
