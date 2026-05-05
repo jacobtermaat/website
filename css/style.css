@@ -9,18 +9,17 @@
     --text-color: #0f172a;          
     --text-muted: #475569;
     --card-bg: #ffffff;             
-    --nav-bg: rgba(255, 255, 255, 0.8); /* For glassmorphism */
+    --nav-bg: rgba(255, 255, 255, 0.85); 
     --card-border: rgba(0, 0, 0, 0.05);
     --font-main: 'Inter', sans-serif;
 }
 
-/* --- 1.5 DARK THEME VARIABLES --- */
 body.dark-theme {
     --bg-color: #0f172a;            
     --text-color: #f8fafc;          
     --text-muted: #94a3b8;
     --card-bg: #1e293b;             
-    --nav-bg: rgba(30, 41, 59, 0.8); 
+    --nav-bg: rgba(30, 41, 59, 0.85); 
     --card-border: rgba(255, 255, 255, 0.1);
     --primary-color: #3b82f6;       
     --gradient-text: linear-gradient(90deg, #3b82f6, #a855f7);
@@ -33,9 +32,7 @@ body.dark-theme {
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font-main);
@@ -52,14 +49,13 @@ a {
     transition: color 0.3s ease;
 }
 
-/* --- 3. LAYOUT UTILITIES --- */
 .container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* Scroll Animation Classes */
+/* Scroll Animations */
 .hidden {
     opacity: 0;
     transform: translateY(30px);
@@ -70,7 +66,7 @@ a {
     transform: translateY(0);
 }
 
-/* --- 4. NAVIGATION (Glassmorphism) --- */
+/* --- 3. NAVIGATION --- */
 header {
     background-color: var(--nav-bg);
     backdrop-filter: blur(12px);
@@ -79,7 +75,6 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .navbar {
@@ -87,6 +82,7 @@ header {
     justify-content: space-between;
     align-items: center;
     height: 70px;
+    position: relative;
 }
 
 .logo {
@@ -104,13 +100,8 @@ header {
     align-items: center;
 }
 
-.nav-links a {
-    font-weight: 600;
-}
-
-.nav-links a:hover {
-    color: var(--primary-color);
-}
+.nav-links a { font-weight: 600; }
+.nav-links a:hover { color: var(--primary-color); }
 
 .theme-btn {
     background: none;
@@ -127,7 +118,24 @@ header {
     background-color: var(--card-border);
 }
 
-/* --- 5. HERO SECTION --- */
+/* Hamburger Menu (Hidden on Desktop) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    z-index: 101;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-color);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* --- 4. HERO SECTION --- */
 .hero {
     display: flex;
     align-items: center;
@@ -148,14 +156,25 @@ header {
     color: transparent;
 }
 
-.hero-content p {
-    font-size: 1.2rem;
+/* Typed.js custom cursor color to match gradient */
+.typed-cursor {
+    color: var(--primary-color);
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+.hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
     color: var(--text-muted);
     margin-bottom: 30px;
     max-width: 600px;
 }
 
-/* Buttons */
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
 .btn {
     display: inline-block;
     padding: 12px 24px;
@@ -165,6 +184,7 @@ header {
     border-radius: 8px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: none;
+    text-align: center;
 }
 
 .btn:hover {
@@ -185,24 +205,22 @@ header {
     box-shadow: 0 10px 20px var(--card-border);
 }
 
-/* --- 6. PROJECTS SECTION --- */
-.projects {
-    padding: 80px 20px;
-}
+/* --- 5. PROJECTS SECTION --- */
+.projects { padding: 80px 20px; }
 
 .projects h2 {
     margin-bottom: 40px;
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 2.5rem);
     font-weight: 800;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Updated for better mobile fitting */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 30px;
 }
 
-/* Upgraded Cards */
 .card {
     background: var(--card-bg);
     padding: 30px;
@@ -210,34 +228,18 @@ header {
     border: 1px solid var(--card-border);
     box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    position: relative;
-    overflow: hidden;
 }
 
-/* Subtly glow effect on hover */
 .card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     border-color: var(--primary-color);
 }
 
-.card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-}
+.card h3 { font-size: 1.4rem; margin-bottom: 10px; }
+.card p { color: var(--text-muted); margin-bottom: 20px; }
 
-.card p {
-    color: var(--text-muted);
-    margin-bottom: 20px;
-}
-
-/* Tech Tags */
-.tags {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
+.tags { display: flex; gap: 10px; flex-wrap: wrap; }
 .tag {
     font-size: 0.8rem;
     font-weight: 600;
@@ -247,14 +249,12 @@ header {
     color: var(--text-color);
 }
 
-/* --- 7. CONTACT SECTION --- */
-.contact {
-    padding: 80px 20px 100px 20px;
-}
+/* --- 6. CONTACT SECTION --- */
+.contact { padding: 80px 20px 100px 20px; }
 
 .contact h2 {
     margin-bottom: 40px;
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 2.5rem);
     font-weight: 800;
     text-align: center;
 }
@@ -280,12 +280,57 @@ header {
     flex-wrap: wrap;
 }
 
-/* --- 8. FOOTER --- */
+/* --- 7. FOOTER --- */
 footer {
     text-align: center;
     padding: 40px 20px;
     background-color: var(--card-bg);
     border-top: 1px solid var(--card-border);
     color: var(--text-muted);
-    transition: background-color 0.3s ease;
+}
+
+
+/* --- 8. MOBILE RESPONSIVENESS (Media Queries) --- */
+@media (max-width: 768px) {
+    /* Show Hamburger Icon */
+    .menu-toggle { display: flex; }
+
+    /* Hide standard nav links and set up mobile drawer */
+    .nav-links {
+        position: absolute;
+        top: 70px; /* Right under navbar */
+        left: -100%; /* Hidden off-screen by default */
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--card-bg);
+        border-bottom: 1px solid var(--card-border);
+        padding: 20px 0;
+        transition: left 0.3s ease-in-out;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Active class slides it in */
+    .nav-links.active { left: 0; }
+    .nav-links li { margin: 10px 0; }
+    
+    /* Shrink padding globally for mobile */
+    .hero { min-height: 60vh; padding-top: 20px; text-align: left; }
+    .projects, .contact { padding: 60px 20px; }
+    .contact-card { padding: 40px 15px; }
+
+    /* Make buttons stack properly on super small screens */
+    .btn, .btn-outline { width: 100%; margin-bottom: 10px; }
+    .contact-links { flex-direction: column; width: 100%; }
+    .hero-buttons { width: 100%; flex-direction: column; gap: 0; }
+    
+    /* Hamburger animation when open */
+    .menu-toggle.is-active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle.is-active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.is-active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
 }

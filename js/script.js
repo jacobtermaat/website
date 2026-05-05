@@ -8,36 +8,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- 2. Dark Mode Toggle & System Preference ---
     const themeBtn = document.getElementById("theme-toggle");
-    
-    // Check local storage AND system preferences
     const currentTheme = localStorage.getItem("theme");
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
-    // Determine if we should start in dark mode
     if (currentTheme === "dark" || (!currentTheme && prefersDarkScheme.matches)) {
         document.body.classList.add("dark-theme");
-        themeBtn.textContent = "☀️"; // Sun icon for dark mode
+        themeBtn.textContent = "☀️";
     } else {
-        themeBtn.textContent = "🌙"; // Moon icon for light mode
+        themeBtn.textContent = "🌙";
     }
 
-    // Listen for a click on the theme button
     themeBtn.addEventListener("click", () => {
         document.body.classList.toggle("dark-theme");
-
-        let theme = "light";
-        if (document.body.classList.contains("dark-theme")) {
-            theme = "dark";
-            themeBtn.textContent = "☀️";
-        } else {
-            themeBtn.textContent = "🌙";
-        }
-
-        // Save user preference
+        let theme = document.body.classList.contains("dark-theme") ? "dark" : "light";
+        themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
         localStorage.setItem("theme", theme);
     });
 
-    // Listen for system theme changes in real-time (if user hasn't overridden it)
     prefersDarkScheme.addEventListener("change", (e) => {
         if (!localStorage.getItem("theme")) {
             if (e.matches) {
@@ -50,7 +37,41 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- 3. Scroll Reveal Animations ---
+    // --- 3. Mobile Hamburger Menu ---
+    const mobileMenu = document.getElementById("mobile-menu");
+    const navLinks = document.querySelector(".nav-links");
+
+    mobileMenu.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        mobileMenu.classList.toggle("is-active");
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll(".nav-links a").forEach(link => {
+        link.addEventListener("click", () => {
+            navLinks.classList.remove("active");
+            mobileMenu.classList.remove("is-active");
+        });
+    });
+
+    // --- 4. Typed.js Initialization ---
+    // Make sure the element exists before initializing to prevent errors
+    if (document.getElementById("typed")) {
+        new Typed("#typed", {
+            strings: [
+                "Computer Engineer", 
+                "Hardware Enthusiast", 
+                "Software Developer", 
+                "Problem Solver"
+            ],
+            typeSpeed: 60,
+            backSpeed: 40,
+            backDelay: 1500,
+            loop: true
+        });
+    }
+
+    // --- 5. Scroll Reveal Animations ---
     const observerOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
@@ -60,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("show");
-                observer.unobserve(entry.target); // Only animate once
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
