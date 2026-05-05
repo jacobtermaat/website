@@ -304,10 +304,14 @@ header {
 /* --- 8. TRIC PAGE --- */
 .project-page {
     padding: 60px 20px 100px 20px;
+    width: 100%;
 }
 
 .project-page-header {
     margin-bottom: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    width: min(1600px, calc(100% - 40px));
 }
 
 .project-page-header h1 {
@@ -330,7 +334,7 @@ header {
 
 .tric-model-viewer {
     width: 100%;
-    height: min(70vh, 620px);
+    height: min(78vh, 760px);
     min-height: 360px;
     border-radius: 12px;
     background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(139, 92, 246, 0.08));
@@ -339,6 +343,7 @@ header {
 .model-help {
     margin-top: 14px;
     color: var(--text-muted);
+    margin-bottom: 16px;
 }
 
 /* --- 9. FOOTER --- */

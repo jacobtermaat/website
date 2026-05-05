@@ -28,7 +28,7 @@
     </header>
 
     <main>
-        <section class="project-page container">
+        <section class="project-page">
             <div class="project-page-header hidden">
                 <h1>TRIC</h1>
                 <p>
@@ -39,19 +39,23 @@
 
             <div class="model-card hidden">
                 <model-viewer
+                    id="tric-viewer"
                     class="tric-model-viewer"
                     src="assets/tric-model.glb"
                     alt="3D model preview for TRIC"
                     camera-controls
-                    touch-action="pan-y"
-                    auto-rotate
+                    disable-pan
+                    camera-orbit="45deg 75deg 100%"
+                    camera-target="0m 0m 0m"
+                    field-of-view="30deg"
                     shadow-intensity="1"
                     exposure="1"
                     ar>
                 </model-viewer>
                 <p class="model-help">
-                    Drag to rotate, scroll/pinch to zoom, and right-click drag (or two-finger drag) to pan.
+                    Drag to rotate and scroll/pinch to zoom. Panning is disabled.
                 </p>
+                <button id="reset-view" class="btn btn-outline" type="button">Reset View</button>
             </div>
 
             <div class="hero-buttons hidden" style="margin-top: 24px;">
@@ -69,5 +73,25 @@
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
     <script src="js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const viewer = document.getElementById("tric-viewer");
+            const resetButton = document.getElementById("reset-view");
+            const defaultView = {
+                orbit: "45deg 75deg 100%",
+                target: "0m 0m 0m",
+                fov: "30deg"
+            };
+
+            if (!viewer || !resetButton) return;
+
+            resetButton.addEventListener("click", () => {
+                viewer.cameraOrbit = defaultView.orbit;
+                viewer.cameraTarget = defaultView.target;
+                viewer.fieldOfView = defaultView.fov;
+                viewer.jumpCameraToGoal();
+            });
+        });
+    </script>
 </body>
 </html>
