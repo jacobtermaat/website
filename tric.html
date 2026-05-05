@@ -48,6 +48,15 @@
                     exposure="1"
                     ar>
                     <button
+                        id="sample-hotspot"
+                        class="pick-marker info-hotspot"
+                        slot="hotspot-sample"
+                        data-position="1m 1m 1m"
+                        data-normal="0m 1m 0m"
+                        aria-label="Sample hotspot">
+                        +
+                    </button>
+                    <button
                         id="pick-marker"
                         class="pick-marker"
                         slot="hotspot-picked"
@@ -98,6 +107,7 @@
             const resetButton = document.getElementById("reset-view");
             const pickModeButton = document.getElementById("toggle-pick-mode");
             const pickMarker = document.getElementById("pick-marker");
+            const sampleHotspot = document.getElementById("sample-hotspot");
             const pickedPosition = document.getElementById("picked-position");
             const pickedNormal = document.getElementById("picked-normal");
             const copyPositionButton = document.getElementById("copy-position");
@@ -109,7 +119,7 @@
             };
             let pickModeEnabled = false;
 
-            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton) return;
+            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton || !sampleHotspot) return;
 
             const formatVec = (vec) => {
                 return `${vec.x.toFixed(4)}m ${vec.y.toFixed(4)}m ${vec.z.toFixed(4)}m`;
@@ -165,6 +175,10 @@
             copyNormalButton.addEventListener("click", async () => {
                 if (!pickedNormal.textContent || pickedNormal.textContent === "Not picked yet") return;
                 await navigator.clipboard.writeText(pickedNormal.textContent);
+            });
+
+            sampleHotspot.addEventListener("click", () => {
+                window.alert("Placeholder info: this is a sample hotspot at 1m, 1m, 1m.");
             });
         });
     </script>

@@ -387,6 +387,11 @@ header {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
 }
 
+.info-hotspot {
+    cursor: pointer;
+    background: #8b5cf6;
+}
+
 /* --- 9. FOOTER --- */
 footer {
     text-align: center;
