@@ -31,10 +31,6 @@
         <section class="project-page">
             <div class="project-page-header hidden">
                 <h1>TRIC</h1>
-                <p>
-                    This page is the extended view for TRIC. Replace the placeholder model file in
-                    <code>assets/tric-model.glb</code> with your own model and this viewer will render it.
-                </p>
             </div>
 
             <div class="model-card hidden">
@@ -51,6 +47,16 @@
                     shadow-intensity="1"
                     exposure="1"
                     ar>
+                    <button
+                        id="pick-marker"
+                        class="pick-marker"
+                        slot="hotspot-picked"
+                        data-position="0m 0m 0m"
+                        data-normal="0m 1m 0m"
+                        hidden
+                        aria-label="Picked hotspot marker">
+                        +
+                    </button>
                 </model-viewer>
             </div>
 
@@ -59,6 +65,16 @@
                     Drag to rotate and scroll/pinch to zoom. Panning is disabled.
                 </p>
                 <button id="reset-view" class="btn btn-outline" type="button">Reset View</button>
+                <button id="toggle-pick-mode" class="btn btn-outline" type="button">Pick Points: Off</button>
+                <div class="picker-panel" id="picker-panel">
+                    <p><strong>Hotspot Picker:</strong> turn on pick mode, then click any point on the model.</p>
+                    <p><strong>Position:</strong> <code id="picked-position">Not picked yet</code></p>
+                    <p><strong>Normal:</strong> <code id="picked-normal">Not picked yet</code></p>
+                    <div class="picker-actions">
+                        <button id="copy-position" class="btn btn-outline" type="button">Copy Position</button>
+                        <button id="copy-normal" class="btn btn-outline" type="button">Copy Normal</button>
+                    </div>
+                </div>
             </div>
 
             <div class="hero-buttons hidden" style="margin-top: 24px;">
@@ -80,19 +96,75 @@
         document.addEventListener("DOMContentLoaded", () => {
             const viewer = document.getElementById("tric-viewer");
             const resetButton = document.getElementById("reset-view");
+            const pickModeButton = document.getElementById("toggle-pick-mode");
+            const pickMarker = document.getElementById("pick-marker");
+            const pickedPosition = document.getElementById("picked-position");
+            const pickedNormal = document.getElementById("picked-normal");
+            const copyPositionButton = document.getElementById("copy-position");
+            const copyNormalButton = document.getElementById("copy-normal");
             const defaultView = {
                 orbit: "45deg 75deg 100%",
                 target: "0m 0m 0m",
                 fov: "30deg"
             };
+            let pickModeEnabled = false;
 
-            if (!viewer || !resetButton) return;
+            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton) return;
+
+            const formatVec = (vec) => {
+                return `${vec.x.toFixed(4)}m ${vec.y.toFixed(4)}m ${vec.z.toFixed(4)}m`;
+            };
+
+            const formatNormal = (vec) => {
+                return `${vec.x.toFixed(4)}m ${vec.y.toFixed(4)}m ${vec.z.toFixed(4)}m`;
+            };
+
+            const setPickMode = (enabled) => {
+                pickModeEnabled = enabled;
+                pickModeButton.textContent = enabled ? "Pick Points: On" : "Pick Points: Off";
+                pickModeButton.classList.toggle("btn", enabled);
+                pickModeButton.classList.toggle("btn-outline", !enabled);
+            };
 
             resetButton.addEventListener("click", () => {
                 viewer.cameraOrbit = defaultView.orbit;
                 viewer.cameraTarget = defaultView.target;
                 viewer.fieldOfView = defaultView.fov;
                 viewer.jumpCameraToGoal();
+            });
+
+            pickModeButton.addEventListener("click", () => {
+                setPickMode(!pickModeEnabled);
+            });
+
+            viewer.addEventListener("click", (event) => {
+                if (!pickModeEnabled) return;
+
+                const hit = viewer.positionAndNormalFromPoint(event.clientX, event.clientY);
+                if (!hit) return;
+
+                const positionText = formatVec(hit.position);
+                const normalText = formatNormal(hit.normal);
+
+                pickMarker.dataset.position = positionText;
+                pickMarker.dataset.normal = normalText;
+                pickMarker.hidden = false;
+                if (typeof pickMarker.updateHotspot === "function") {
+                    pickMarker.updateHotspot();
+                }
+
+                pickedPosition.textContent = positionText;
+                pickedNormal.textContent = normalText;
+            });
+
+            copyPositionButton.addEventListener("click", async () => {
+                if (!pickedPosition.textContent || pickedPosition.textContent === "Not picked yet") return;
+                await navigator.clipboard.writeText(pickedPosition.textContent);
+            });
+
+            copyNormalButton.addEventListener("click", async () => {
+                if (!pickedNormal.textContent || pickedNormal.textContent === "Not picked yet") return;
+                await navigator.clipboard.writeText(pickedNormal.textContent);
             });
         });
     </script>
