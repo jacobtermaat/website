@@ -336,6 +336,15 @@ header {
     gap: 28px;
 }
 
+.tric-tagline {
+    flex: 1;
+    max-width: 520px;
+    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.3;
+}
+
 .contributors-wrap {
     display: grid;
     grid-template-columns: repeat(2, minmax(220px, 1fr));
@@ -574,6 +583,10 @@ footer {
     .contact-card { padding: 40px 15px; }
     .tric-header-row {
         flex-direction: column;
+    }
+    .tric-tagline {
+        max-width: 100%;
+        margin-top: 6px;
     }
     .contributors-wrap {
         grid-template-columns: 1fr;
