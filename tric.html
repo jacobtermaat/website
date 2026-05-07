@@ -335,7 +335,8 @@
                 if (dimLineEls.length < 5) return;
                 drawLine(dimLineEls[0], viewer.queryHotspot("hotspot-dot+X-Y+Z"), viewer.queryHotspot("hotspot-dot+X-Y-Z"), viewer.queryHotspot("hotspot-dim+X-Y"));
                 drawLine(dimLineEls[1], viewer.queryHotspot("hotspot-dot+X-Y-Z"), viewer.queryHotspot("hotspot-dot+X+Y-Z"), viewer.queryHotspot("hotspot-dim+X-Z"));
-                drawLine(dimLineEls[2], viewer.queryHotspot("hotspot-dot+X+Y-Z"), viewer.queryHotspot("hotspot-dot-X+Y-Z"));
+                // X dimension line placed at the bottom (Y low) instead of top.
+                drawLine(dimLineEls[2], viewer.queryHotspot("hotspot-dot+X-Y-Z"), viewer.queryHotspot("hotspot-dot-X-Y-Z"));
                 drawLine(dimLineEls[3], viewer.queryHotspot("hotspot-dot-X+Y-Z"), viewer.queryHotspot("hotspot-dot-X-Y-Z"), viewer.queryHotspot("hotspot-dim-X-Z"));
                 drawLine(dimLineEls[4], viewer.queryHotspot("hotspot-dot-X-Y-Z"), viewer.queryHotspot("hotspot-dot-X-Y+Z"), viewer.queryHotspot("hotspot-dim-X-Y"));
             };
@@ -347,6 +348,11 @@
 
             viewer.addEventListener("load", () => {
                 try {
+                    // If your model's dimensions appear 10x too large, this likely means
+                    // the model units are decimeters (0.1m) instead of meters.
+                    const UNIT_TO_METERS = 0.1;
+                    const toInches = (units) => (units * UNIT_TO_METERS * 39.3700787402);
+
                     const center = viewer.getBoundingBoxCenter();
                     const size = viewer.getDimensions();
                     const x2 = size.x / 2;
@@ -356,27 +362,27 @@
                     viewer.updateHotspot({ name: "hotspot-dot+X-Y+Z", position: `${center.x + x2}m ${center.y - y2}m ${center.z + z2}m` });
                     viewer.updateHotspot({ name: "hotspot-dim+X-Y", position: `${center.x + x2 * 1.2}m ${center.y - y2 * 1.1}m ${center.z}m` });
                     const dimXY = viewer.querySelector('button[slot="hotspot-dim+X-Y"]');
-                    if (dimXY) dimXY.textContent = `${(size.z * 100).toFixed(0)} cm`;
+                    if (dimXY) dimXY.textContent = `${toInches(size.z).toFixed(1)} in`;
 
                     viewer.updateHotspot({ name: "hotspot-dot+X-Y-Z", position: `${center.x + x2}m ${center.y - y2}m ${center.z - z2}m` });
                     viewer.updateHotspot({ name: "hotspot-dim+X-Z", position: `${center.x + x2 * 1.2}m ${center.y}m ${center.z - z2 * 1.2}m` });
                     const dimXZ = viewer.querySelector('button[slot="hotspot-dim+X-Z"]');
-                    if (dimXZ) dimXZ.textContent = `${(size.y * 100).toFixed(0)} cm`;
+                    if (dimXZ) dimXZ.textContent = `${toInches(size.y).toFixed(1)} in`;
 
                     viewer.updateHotspot({ name: "hotspot-dot+X+Y-Z", position: `${center.x + x2}m ${center.y + y2}m ${center.z - z2}m` });
                     viewer.updateHotspot({ name: "hotspot-dim+Y-Z", position: `${center.x}m ${center.y + y2 * 1.1}m ${center.z - z2 * 1.1}m` });
                     const dimYZ = viewer.querySelector('button[slot="hotspot-dim+Y-Z"]');
-                    if (dimYZ) dimYZ.textContent = `${(size.x * 100).toFixed(0)} cm`;
+                    if (dimYZ) dimYZ.textContent = `${toInches(size.x).toFixed(1)} in`;
 
                     viewer.updateHotspot({ name: "hotspot-dot-X+Y-Z", position: `${center.x - x2}m ${center.y + y2}m ${center.z - z2}m` });
                     viewer.updateHotspot({ name: "hotspot-dim-X-Z", position: `${center.x - x2 * 1.2}m ${center.y}m ${center.z - z2 * 1.2}m` });
                     const dimXNegZ = viewer.querySelector('button[slot="hotspot-dim-X-Z"]');
-                    if (dimXNegZ) dimXNegZ.textContent = `${(size.y * 100).toFixed(0)} cm`;
+                    if (dimXNegZ) dimXNegZ.textContent = `${toInches(size.y).toFixed(1)} in`;
 
                     viewer.updateHotspot({ name: "hotspot-dot-X-Y-Z", position: `${center.x - x2}m ${center.y - y2}m ${center.z - z2}m` });
                     viewer.updateHotspot({ name: "hotspot-dim-X-Y", position: `${center.x - x2 * 1.2}m ${center.y - y2 * 1.1}m ${center.z}m` });
                     const dimXNegY = viewer.querySelector('button[slot="hotspot-dim-X-Y"]');
-                    if (dimXNegY) dimXNegY.textContent = `${(size.z * 100).toFixed(0)} cm`;
+                    if (dimXNegY) dimXNegY.textContent = `${toInches(size.z).toFixed(1)} in`;
 
                     viewer.updateHotspot({ name: "hotspot-dot-X-Y+Z", position: `${center.x - x2}m ${center.y - y2}m ${center.z + z2}m` });
 
