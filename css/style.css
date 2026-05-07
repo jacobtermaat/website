@@ -518,7 +518,7 @@ header {
     line-height: 1.35;
     transform-origin: top left;
     /* Offset so popup doesn't overlap the label */
-    --popup-x: 100px;
+    --popup-x: 40px;
     --popup-y: 0px;
     --popup-scale: 1;
     transform: translate(var(--popup-x), var(--popup-y)) scale(var(--popup-scale));
@@ -557,6 +557,67 @@ header {
 
 .info-hotspot.popup-open {
     display: none;
+}
+
+.dim-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.dim-toggle input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-color);
+}
+
+.dim-dot {
+    display: none;
+}
+
+.dim-label {
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.85);
+    display: block;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    font-weight: 800;
+    max-width: 160px;
+    overflow-wrap: break-word;
+    padding: 0.45em 0.7em;
+    position: absolute;
+    width: max-content;
+    height: max-content;
+    transform: translate3d(-50%, -50%, 0);
+    pointer-events: none;
+    --min-hotspot-opacity: 0;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+body.dark-theme .dim-label {
+    background: rgba(15, 23, 42, 0.88);
+    color: rgba(248, 250, 252, 0.92);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dimension-line-container {
+    pointer-events: none;
+    display: block;
+}
+
+.dimension-line {
+    stroke: #16a5e6;
+    stroke-width: 2;
+    stroke-dasharray: 2;
+}
+
+.hide {
+    display: none !important;
 }
 /* --- 9. FOOTER --- */
 footer {

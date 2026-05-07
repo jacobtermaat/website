@@ -83,6 +83,27 @@
                     tone-mapping="neutral"
                     exposure="0.2"
                     ar>
+                    <!-- Dimension hotspots (auto-positioned on load) -->
+                    <button slot="hotspot-dot+X-Y+Z" class="dim-dot" data-position="0m 0m 0m" data-normal="1m 0m 0m"></button>
+                    <button slot="hotspot-dim+X-Y" class="dim-label" data-position="0m 0m 0m" data-normal="1m 0m 0m"></button>
+                    <button slot="hotspot-dot+X-Y-Z" class="dim-dot" data-position="0m 0m 0m" data-normal="1m 0m 0m"></button>
+                    <button slot="hotspot-dim+X-Z" class="dim-label" data-position="0m 0m 0m" data-normal="1m 0m 0m"></button>
+                    <button slot="hotspot-dot+X+Y-Z" class="dim-dot" data-position="0m 0m 0m" data-normal="0m 1m 0m"></button>
+                    <button slot="hotspot-dim+Y-Z" class="dim-label" data-position="0m 0m 0m" data-normal="0m 1m 0m"></button>
+                    <button slot="hotspot-dot-X+Y-Z" class="dim-dot" data-position="0m 0m 0m" data-normal="0m 1m 0m"></button>
+                    <button slot="hotspot-dim-X-Z" class="dim-label" data-position="0m 0m 0m" data-normal="-1m 0m 0m"></button>
+                    <button slot="hotspot-dot-X-Y-Z" class="dim-dot" data-position="0m 0m 0m" data-normal="-1m 0m 0m"></button>
+                    <button slot="hotspot-dim-X-Y" class="dim-label" data-position="0m 0m 0m" data-normal="-1m 0m 0m"></button>
+                    <button slot="hotspot-dot-X-Y+Z" class="dim-dot" data-position="0m 0m 0m" data-normal="-1m 0m 0m"></button>
+
+                    <svg id="dimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimension-line-container">
+                        <line class="dimension-line"></line>
+                        <line class="dimension-line"></line>
+                        <line class="dimension-line"></line>
+                        <line class="dimension-line"></line>
+                        <line class="dimension-line"></line>
+                    </svg>
+
                     <button
                         id="sample-hotspot"
                         class="pick-marker info-hotspot"
@@ -126,6 +147,10 @@
                 </p>
                 <button id="reset-view" class="btn btn-outline" type="button">Reset View</button>
                 <button id="toggle-pick-mode" class="btn btn-outline" type="button">Pick Points: Off</button>
+                <label class="dim-toggle">
+                    <input id="show-dimensions" type="checkbox" checked>
+                    Show dimensions
+                </label>
                 <div class="picker-panel" id="picker-panel">
                     <p><strong>Hotspot Picker:</strong> turn on pick mode, then click any point on the model.</p>
                     <p><strong>Position:</strong> <code id="picked-position">Not picked yet</code></p>
@@ -182,6 +207,10 @@
             const hotspotInfoBody = document.getElementById("hotspot-info-body");
             const hotspotPopup = document.getElementById("hotspot-popup");
             const closeHotspotPopup = document.getElementById("close-hotspot-popup");
+            const showDimensions = document.getElementById("show-dimensions");
+            const dimLinesSvg = viewer?.querySelector("#dimLines");
+            const dimLineEls = dimLinesSvg ? Array.from(dimLinesSvg.querySelectorAll("line")) : [];
+            const dimElements = viewer ? [...Array.from(viewer.querySelectorAll(".dim-dot, .dim-label")), dimLinesSvg].filter(Boolean) : [];
             const defaultView = {
                 orbit: "45deg 75deg 100%",
                 target: "0m 0m 0m",
@@ -189,7 +218,7 @@
             };
             let pickModeEnabled = false;
 
-            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton || !sampleHotspot || !hotspotInfoTitle || !hotspotInfoBody || !hotspotPopup || !closeHotspotPopup) return;
+            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton || !sampleHotspot || !hotspotInfoTitle || !hotspotInfoBody || !hotspotPopup || !closeHotspotPopup || !showDimensions) return;
 
             const formatVec = (vec) => {
                 return `${vec.x.toFixed(4)}m ${vec.y.toFixed(4)}m ${vec.z.toFixed(4)}m`;
@@ -283,8 +312,84 @@
                 sampleHotspot.classList.remove("popup-open");
             });
 
+            const setDimVisibility = (visible) => {
+                dimElements.forEach((el) => {
+                    if (!el) return;
+                    if (visible) el.classList.remove("hide");
+                    else el.classList.add("hide");
+                });
+            };
+
+            const drawLine = (svgLine, dotHotspot1, dotHotspot2, dimensionHotspot) => {
+                if (!svgLine || !dotHotspot1 || !dotHotspot2) return;
+                svgLine.setAttribute("x1", dotHotspot1.canvasPosition.x);
+                svgLine.setAttribute("y1", dotHotspot1.canvasPosition.y);
+                svgLine.setAttribute("x2", dotHotspot2.canvasPosition.x);
+                svgLine.setAttribute("y2", dotHotspot2.canvasPosition.y);
+
+                if (dimensionHotspot && !dimensionHotspot.facingCamera) svgLine.classList.add("hide");
+                else svgLine.classList.remove("hide");
+            };
+
+            const renderDimSvg = () => {
+                if (dimLineEls.length < 5) return;
+                drawLine(dimLineEls[0], viewer.queryHotspot("hotspot-dot+X-Y+Z"), viewer.queryHotspot("hotspot-dot+X-Y-Z"), viewer.queryHotspot("hotspot-dim+X-Y"));
+                drawLine(dimLineEls[1], viewer.queryHotspot("hotspot-dot+X-Y-Z"), viewer.queryHotspot("hotspot-dot+X+Y-Z"), viewer.queryHotspot("hotspot-dim+X-Z"));
+                drawLine(dimLineEls[2], viewer.queryHotspot("hotspot-dot+X+Y-Z"), viewer.queryHotspot("hotspot-dot-X+Y-Z"));
+                drawLine(dimLineEls[3], viewer.queryHotspot("hotspot-dot-X+Y-Z"), viewer.queryHotspot("hotspot-dot-X-Y-Z"), viewer.queryHotspot("hotspot-dim-X-Z"));
+                drawLine(dimLineEls[4], viewer.queryHotspot("hotspot-dot-X-Y-Z"), viewer.queryHotspot("hotspot-dot-X-Y+Z"), viewer.queryHotspot("hotspot-dim-X-Y"));
+            };
+
+            showDimensions.addEventListener("change", () => {
+                setDimVisibility(showDimensions.checked);
+                renderDimSvg();
+            });
+
+            viewer.addEventListener("load", () => {
+                try {
+                    const center = viewer.getBoundingBoxCenter();
+                    const size = viewer.getDimensions();
+                    const x2 = size.x / 2;
+                    const y2 = size.y / 2;
+                    const z2 = size.z / 2;
+
+                    viewer.updateHotspot({ name: "hotspot-dot+X-Y+Z", position: `${center.x + x2}m ${center.y - y2}m ${center.z + z2}m` });
+                    viewer.updateHotspot({ name: "hotspot-dim+X-Y", position: `${center.x + x2 * 1.2}m ${center.y - y2 * 1.1}m ${center.z}m` });
+                    const dimXY = viewer.querySelector('button[slot="hotspot-dim+X-Y"]');
+                    if (dimXY) dimXY.textContent = `${(size.z * 100).toFixed(0)} cm`;
+
+                    viewer.updateHotspot({ name: "hotspot-dot+X-Y-Z", position: `${center.x + x2}m ${center.y - y2}m ${center.z - z2}m` });
+                    viewer.updateHotspot({ name: "hotspot-dim+X-Z", position: `${center.x + x2 * 1.2}m ${center.y}m ${center.z - z2 * 1.2}m` });
+                    const dimXZ = viewer.querySelector('button[slot="hotspot-dim+X-Z"]');
+                    if (dimXZ) dimXZ.textContent = `${(size.y * 100).toFixed(0)} cm`;
+
+                    viewer.updateHotspot({ name: "hotspot-dot+X+Y-Z", position: `${center.x + x2}m ${center.y + y2}m ${center.z - z2}m` });
+                    viewer.updateHotspot({ name: "hotspot-dim+Y-Z", position: `${center.x}m ${center.y + y2 * 1.1}m ${center.z - z2 * 1.1}m` });
+                    const dimYZ = viewer.querySelector('button[slot="hotspot-dim+Y-Z"]');
+                    if (dimYZ) dimYZ.textContent = `${(size.x * 100).toFixed(0)} cm`;
+
+                    viewer.updateHotspot({ name: "hotspot-dot-X+Y-Z", position: `${center.x - x2}m ${center.y + y2}m ${center.z - z2}m` });
+                    viewer.updateHotspot({ name: "hotspot-dim-X-Z", position: `${center.x - x2 * 1.2}m ${center.y}m ${center.z - z2 * 1.2}m` });
+                    const dimXNegZ = viewer.querySelector('button[slot="hotspot-dim-X-Z"]');
+                    if (dimXNegZ) dimXNegZ.textContent = `${(size.y * 100).toFixed(0)} cm`;
+
+                    viewer.updateHotspot({ name: "hotspot-dot-X-Y-Z", position: `${center.x - x2}m ${center.y - y2}m ${center.z - z2}m` });
+                    viewer.updateHotspot({ name: "hotspot-dim-X-Y", position: `${center.x - x2 * 1.2}m ${center.y - y2 * 1.1}m ${center.z}m` });
+                    const dimXNegY = viewer.querySelector('button[slot="hotspot-dim-X-Y"]');
+                    if (dimXNegY) dimXNegY.textContent = `${(size.z * 100).toFixed(0)} cm`;
+
+                    viewer.updateHotspot({ name: "hotspot-dot-X-Y+Z", position: `${center.x - x2}m ${center.y - y2}m ${center.z + z2}m` });
+
+                    setDimVisibility(showDimensions.checked);
+                    renderDimSvg();
+                } catch (_) {
+                    // If bounding box isn't available, fail silently.
+                }
+            });
+
             viewer.addEventListener("camera-change", () => {
                 updatePopupScale();
+                renderDimSvg();
             });
         });
     </script>
