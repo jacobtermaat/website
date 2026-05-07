@@ -257,7 +257,7 @@
 
                 // Smaller when zoomed out, capped when zoomed in.
                 const scale = Math.min(0.95, Math.max(0.65, 1.15 / radius));
-                hotspotPopup.style.transform = `scale(${scale})`;
+                hotspotPopup.style.setProperty("--popup-scale", String(scale));
             };
 
             const openHotspotPopup = () => {
