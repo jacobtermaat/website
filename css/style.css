@@ -518,8 +518,8 @@ header {
     line-height: 1.35;
     transform-origin: top left;
     /* Offset so popup doesn't overlap the label */
-    --popup-x: -20px;
-    --popup-y: 0px;
+    --popup-x: 120px;
+    --popup-y: -40px;
     --popup-scale: 1;
     transform: translate(var(--popup-x), var(--popup-y)) scale(var(--popup-scale));
     position: relative;
