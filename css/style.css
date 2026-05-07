@@ -517,12 +517,13 @@ header {
     font-size: 0.85rem;
     line-height: 1.35;
     transform-origin: top left;
-    --popup-x: 22px;
-    --popup-y: -18px;
+    /* Offset so popup doesn't overlap the label */
+    --popup-x: 120px;
+    --popup-y: -90px;
     --popup-scale: 1;
     transform: translate(var(--popup-x), var(--popup-y)) scale(var(--popup-scale));
     position: relative;
-    z-index: 10;
+    z-index: 30;
 }
 
 .hotspot-popup-header {
