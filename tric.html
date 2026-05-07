@@ -264,6 +264,7 @@
                 hotspotInfoTitle.textContent = "Corner";
                 hotspotInfoBody.textContent = "Placeholder information: this marker is pinned at 1m, 1m, 1m. Replace this text with your real project notes.";
                 hotspotPopup.hidden = false;
+                sampleHotspot.classList.add("popup-open");
                 updatePopupScale();
             };
 
@@ -279,6 +280,7 @@
 
             closeHotspotPopup.addEventListener("click", () => {
                 hotspotPopup.hidden = true;
+                sampleHotspot.classList.remove("popup-open");
             });
 
             viewer.addEventListener("camera-change", () => {

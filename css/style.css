@@ -555,6 +555,9 @@ header {
     letter-spacing: 0.01em;
 }
 
+.info-hotspot.popup-open .hotspot-label {
+    display: none;
+}
 /* --- 9. FOOTER --- */
 footer {
     text-align: center;
