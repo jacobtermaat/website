@@ -518,8 +518,8 @@ header {
     line-height: 1.35;
     transform-origin: top left;
     /* Offset so popup doesn't overlap the label */
-    --popup-x: 120px;
-    --popup-y: -40px;
+    --popup-x: 100px;
+    --popup-y: 0px;
     --popup-scale: 1;
     transform: translate(var(--popup-x), var(--popup-y)) scale(var(--popup-scale));
     position: relative;
@@ -555,7 +555,7 @@ header {
     letter-spacing: 0.01em;
 }
 
-.info-hotspot.popup-open .hotspot-label {
+.info-hotspot.popup-open {
     display: none;
 }
 /* --- 9. FOOTER --- */
