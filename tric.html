@@ -78,7 +78,7 @@
                     camera-orbit="45deg 75deg 100%"
                     min-camera-orbit="auto auto 50%"
                     max-camera-orbit="auto auto 220%"
-                    camera-target="0m -0.15m 0m"
+                    camera-target="auto auto auto"
                     field-of-view="30deg"
                     shadow-intensity="1"
                     environment-image="neutral"
@@ -253,7 +253,7 @@
             const dimElements = viewer ? [...Array.from(viewer.querySelectorAll(".dim-dot, .dim-label")), dimLinesSvg].filter(Boolean) : [];
             const defaultView = {
                 orbit: "45deg 75deg 100%",
-                target: "0m 0m 0m",
+                target: "auto auto auto",
                 fov: "30deg"
             };
             let pickModeEnabled = false;
@@ -424,6 +424,12 @@
                     const x2 = size.x / 2;
                     const y2 = size.y / 2;
                     const z2 = size.z / 2;
+
+                    defaultView.target = `${center.x}m ${center.y - y2 * 0.08}m ${center.z}m`;
+                    viewer.cameraTarget = defaultView.target;
+                    viewer.cameraOrbit = defaultView.orbit;
+                    viewer.fieldOfView = defaultView.fov;
+                    viewer.jumpCameraToGoal();
 
                     viewer.updateHotspot({ name: "hotspot-dot+X-Y+Z", position: `${center.x + x2}m ${center.y - y2}m ${center.z + z2}m` });
                     viewer.updateHotspot({ name: "hotspot-dim+X-Y", position: `${center.x + x2 * 1.2}m ${center.y - y2 * 1.1}m ${center.z}m` });
