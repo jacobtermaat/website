@@ -70,7 +70,7 @@
                     class="tric-model-viewer"
                     src="assets/the_fourth.glb"
                     alt="3D model preview for TRIC"
-                    scale="0.01"
+                    scale="1"
                     ar-scale="fixed"
                     camera-controls
                     disable-pan
@@ -259,6 +259,19 @@
             let pickModeEnabled = false;
 
             if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton || !infoHotspots.length || !hotspotInfoTitle || !hotspotInfoBody || !hotspotPopup || !closeHotspotPopup || !showDimensions) return;
+
+            // Model file is ~100× too large for real-world AR; keep full scale on web, shrink only in AR.
+            const AR_WORLD_SCALE = "0.01";
+            const WEB_VIEW_SCALE = "1";
+
+            viewer.addEventListener("ar-status", (event) => {
+                const status = event.detail?.status;
+                if (status === "session-started" || status === "object-placed") {
+                    viewer.setAttribute("scale", AR_WORLD_SCALE);
+                } else if (status === "not-presenting" || status === "failed") {
+                    viewer.setAttribute("scale", WEB_VIEW_SCALE);
+                }
+            });
 
             const formatVec = (vec) => {
                 return `${vec.x.toFixed(4)}m ${vec.y.toFixed(4)}m ${vec.z.toFixed(4)}m`;
