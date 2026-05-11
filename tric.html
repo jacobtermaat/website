@@ -105,25 +105,63 @@
                     </svg>
 
                     <button
-                        id="sample-hotspot"
+                        id="hotspot-inserter"
                         class="pick-marker info-hotspot"
-                        slot="hotspot-sample"
-                        data-position="262.3945m 27.8972m 109.3330m"
-                        data-normal="0.8910m 0.0000m 0.4540m"
-                        aria-label="Sample hotspot">
+                        slot="hotspot-inserter"
+                        data-position="262.1446m 27.5186m 12.0765m"
+                        data-normal="0.8910m 0.0000m -0.4540m"
+                        data-info-title="Inserter"
+                        data-info-body="Placeholder information for the Inserter. Replace with your project copy."
+                        aria-label="Inserter hotspot">
                         <span class="hotspot-symbol">+</span>
                         <span class="hotspot-label">Inserter</span>
+                    </button>
+                    <button
+                        id="hotspot-ejector"
+                        class="pick-marker info-hotspot"
+                        slot="hotspot-ejector"
+                        data-position="235.5000m -114.4294m 123.9940m"
+                        data-normal="1.0000m 0.0000m 0.0000m"
+                        data-info-title="Ejector"
+                        data-info-body="Placeholder information for the Ejector. Replace with your project copy."
+                        aria-label="Ejector hotspot">
+                        <span class="hotspot-symbol">+</span>
+                        <span class="hotspot-label">Ejector</span>
+                    </button>
+                    <button
+                        id="hotspot-camera"
+                        class="pick-marker info-hotspot"
+                        slot="hotspot-camera"
+                        data-position="43.8752m 125.1666m 215.9500m"
+                        data-normal="0.0000m 0.0000m 1.0000m"
+                        data-info-title="Camera"
+                        data-info-body="Placeholder information for the Camera. Replace with your project copy."
+                        aria-label="Camera hotspot">
+                        <span class="hotspot-symbol">+</span>
+                        <span class="hotspot-label">Camera</span>
+                    </button>
+                    <button
+                        id="hotspot-card-wheel"
+                        class="pick-marker info-hotspot"
+                        slot="hotspot-card-wheel"
+                        data-position="38.0000m 42.1869m 67.8212m"
+                        data-normal="-1.0000m 0.0000m 0.0000m"
+                        data-info-title="Card Wheel"
+                        data-info-body="Placeholder information for the Card Wheel. Replace with your project copy."
+                        aria-label="Card Wheel hotspot">
+                        <span class="hotspot-symbol">+</span>
+                        <span class="hotspot-label">Card Wheel</span>
                     </button>
                     <div
                         id="hotspot-popup"
                         class="hotspot-popup"
-                        slot="hotspot-sample-info"
-                        data-position="262.3945m 27.8972m 109.3330m"
-                        data-normal="0.8910m 0.0000m 0.4540m"
+                        slot="hotspot-info-popup"
+                        data-position="262.1446m 27.5186m 12.0765m"
+                        data-normal="0.8910m 0.0000m -0.4540m"
                         hidden
                         aria-live="polite">
                         <div class="hotspot-popup-header">
-                            <strong id="hotspot-info-title">Corner</strong>
+                            <strong id="hotspot-info-title">Inserter</strong>
                             <button id="close-hotspot-popup" class="popup-close" type="button" aria-label="Close hotspot information">×</button>
                         </div>
                         <p id="hotspot-info-body">Placeholder information for the selected model point.</p>
@@ -198,7 +236,7 @@
             const resetButton = document.getElementById("reset-view");
             const pickModeButton = document.getElementById("toggle-pick-mode");
             const pickMarker = document.getElementById("pick-marker");
-            const sampleHotspot = document.getElementById("sample-hotspot");
+            const infoHotspots = viewer ? Array.from(viewer.querySelectorAll(".info-hotspot")) : [];
             const pickedPosition = document.getElementById("picked-position");
             const pickedNormal = document.getElementById("picked-normal");
             const copyPositionButton = document.getElementById("copy-position");
@@ -218,7 +256,7 @@
             };
             let pickModeEnabled = false;
 
-            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton || !sampleHotspot || !hotspotInfoTitle || !hotspotInfoBody || !hotspotPopup || !closeHotspotPopup || !showDimensions) return;
+            if (!viewer || !resetButton || !pickModeButton || !pickMarker || !pickedPosition || !pickedNormal || !copyPositionButton || !copyNormalButton || !infoHotspots.length || !hotspotInfoTitle || !hotspotInfoBody || !hotspotPopup || !closeHotspotPopup || !showDimensions) return;
 
             const formatVec = (vec) => {
                 return `${vec.x.toFixed(4)}m ${vec.y.toFixed(4)}m ${vec.z.toFixed(4)}m`;
@@ -289,27 +327,35 @@
                 hotspotPopup.style.setProperty("--popup-scale", String(scale));
             };
 
-            const openHotspotPopup = () => {
-                hotspotInfoTitle.textContent = "Corner";
-                hotspotInfoBody.textContent = "Placeholder information: this marker is pinned at 1m, 1m, 1m. Replace this text with your real project notes.";
+            const openHotspotPopup = (activeButton) => {
+                if (!activeButton) return;
+                hotspotInfoTitle.textContent = activeButton.dataset.infoTitle || "Info";
+                hotspotInfoBody.textContent = activeButton.dataset.infoBody || "Placeholder information for this model point.";
+                hotspotPopup.dataset.position = activeButton.dataset.position || "";
+                hotspotPopup.dataset.normal = activeButton.dataset.normal || "";
+                if (typeof hotspotPopup.updateHotspot === "function") {
+                    hotspotPopup.updateHotspot();
+                }
+                infoHotspots.forEach((btn) => btn.classList.remove("popup-open"));
                 hotspotPopup.hidden = false;
-                sampleHotspot.classList.add("popup-open");
+                activeButton.classList.add("popup-open");
                 updatePopupScale();
             };
 
-            sampleHotspot.addEventListener("click", (event) => {
-                event.stopPropagation();
-                openHotspotPopup();
-            });
-
-            sampleHotspot.addEventListener("pointerup", (event) => {
-                event.stopPropagation();
-                openHotspotPopup();
+            infoHotspots.forEach((btn) => {
+                btn.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    openHotspotPopup(btn);
+                });
+                btn.addEventListener("pointerup", (event) => {
+                    event.stopPropagation();
+                    openHotspotPopup(btn);
+                });
             });
 
             closeHotspotPopup.addEventListener("click", () => {
                 hotspotPopup.hidden = true;
-                sampleHotspot.classList.remove("popup-open");
+                infoHotspots.forEach((b) => b.classList.remove("popup-open"));
             });
 
             const setDimVisibility = (visible) => {
